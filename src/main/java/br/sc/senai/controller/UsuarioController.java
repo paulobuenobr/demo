@@ -36,4 +36,37 @@ public class UsuarioController {
         // Retorna um JSON com todos os usuários
         return usuarioRepository.findAll();
     }
+
+    @PostMapping(path = "/remove") // Endpoint que recebe apenas requisições POST para inclusão de usuários
+    public @ResponseBody
+    String removeUser(@RequestParam Integer id) {
+        // @ResponseBody significa que a String retornada é a resposta
+        // @RequestParam significa que é um parâmetro da solicitação GET ou POST
+
+        usuarioRepository.deleteById(id);
+        return "Usuário excluído do banco de dados";
+    }
+
+    @PostMapping(path = "/update") // Endpoint que recebe apenas requisições POST para inclusão de usuários
+    public @ResponseBody
+    String updateUser(@RequestParam Integer id, @RequestParam String nome
+            , @RequestParam String email, @RequestParam String senha) {
+        // @ResponseBody significa que a String retornada é a resposta
+        // @RequestParam significa que é um parâmetro da solicitação GET ou POST
+
+        Usuario u = usuarioRepository.findById(id).get();
+        u.setNome(nome);
+        u.setEmail(email);
+        u.setSenha(senha);
+        usuarioRepository.save(u);
+        return "Usuário com id "+u.getId()+" atualizado no banco de dados";
+    }
+
+    @PostMapping(path = "/allbyname") // Endpoint que recebe apenas requisições POST para inclusão de usuários
+    public @ResponseBody
+    Iterable<Usuario> findByName(@RequestParam String nome) {
+        // @ResponseBody significa que a String retornada é a resposta
+        // @RequestParam significa que é um parâmetro da solicitação GET ou POST
+        return usuarioRepository.findAllByName(nome);
+    }
 }
