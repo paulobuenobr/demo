@@ -1,9 +1,6 @@
 package br.sc.senai.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Usuario {
@@ -17,6 +14,10 @@ public class Usuario {
     private String email;
 
     private String senha;
+
+    @ManyToOne
+    @JoinColumn(name="perfil_id")
+    private Perfil perfil;
 
     public Integer getId() {
         return id;
@@ -48,5 +49,13 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 }
